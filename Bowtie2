@@ -29,3 +29,7 @@ samtools view -b -S -
 samtools sort -o myalignment.sorted.bam
 
 echo "end bowtie alignment"
+
+
+
+samtools index myalignment.sorted.bam
