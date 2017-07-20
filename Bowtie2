@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH --ntasks=8
+#SBATCH --mem 300G
+#SBATCH --mail-user=jiafu2@illinois.edu
+#SBATCH --mail-type=ALL
+#SBATCH --job-name=bowtie2
+#SBATCH -D /home/a-m/jiafu2/src/slurm-out-files
+
+
+cd /home/a-m/jiafu2/
+
+
+#module load 
+
+module load Bowtie2/2.3.2-IGB-gcc-4.9.4
+module load SAMtools/1.5-IGB-gcc-4.9.4
+
+
+#run bowtie2
+
+echo "start bowtie alignment"
+
+bowtie2 -x data/genome/newgenomebowtieindex \
+-1 results/trimmomatic/Stage_10_5_Cap_TAAGGC_L002_R1.trimmed.fastq \
+-2 results/trimmomatic/Stage_10_5_Cap_TAAGGC_L002_R2.trimmed.fastq \
+-p 8
+samtools view -b -S -
+samtools sort -o myalignment.sorted.bam
+
+echo "end bowtie alignment"
